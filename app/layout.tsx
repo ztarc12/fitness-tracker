@@ -23,11 +23,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="max-w-4xl mx-auto p-4">
+          <header className="py-4 text-center text-xl font-bold">
+            AI 기반 운동 기록 & 분석
+          </header>
+          {children}
+        </div>
       </body>
     </html>
   );
