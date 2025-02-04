@@ -20,7 +20,7 @@ export async function GET() {
   // const workouts = await Workout.find().sort({date: -1})
   // return NextResponse.json({success: true, workouts})
   try {
-    await connectDB;
+    await connectDB();
     const workouts = await Workout.find().sort({date: -1})
     return NextResponse.json({success: true, workouts})
   } catch (error) {
