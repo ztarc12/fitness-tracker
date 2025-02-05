@@ -6,6 +6,7 @@ import koLocale from "@fullcalendar/core/locales/ko";
 import { useEffect, useState } from "react";
 import { useWorkoutStore } from "../../lib/useWorkoutStore";
 import WorkoutModal from "../../components/WorkoutModal";
+import WorkoutChart from "@/components/WorkoutChart";
 
 export default function Dashboard() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -18,7 +19,11 @@ export default function Dashboard() {
       const res = await fetch("/api/workouts")
       const data= await res.json()
       if(data.success) {
-        setWorkouts(data.workouts)
+        const normalizedWorkouts = data.workouts.map((w: any) => ({
+          id: w._id,
+          ...w,
+        }))
+        setWorkouts(normalizedWorkouts)
       }
     }
     fetchWorkouts()
@@ -44,7 +49,7 @@ export default function Dashboard() {
             setSelectedDate(workout.date)
           }
         }}
-        //등록된 데이터 클릭 시 모달 출력 X
+        
         events={workouts.map((workout) => ({
           // title: workout.title,
           id: workout.id,
@@ -61,6 +66,7 @@ export default function Dashboard() {
           onClose={() => {setSelectedDate(null); setSelectedWorkout(null);}}
         />
       )}
+      <WorkoutChart/>
     </div>
   );
 }

@@ -5,6 +5,6 @@ const WorkoutSchema = new Schema({
   date: {type: String, required: true},
   sets: {type: Number, required: true},
   reps: {type: Number, required: true},
-})
+}, {versionKey: false})
 
 export const Workout = models.Workout || model("Workout", WorkoutSchema)
