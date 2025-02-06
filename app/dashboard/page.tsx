@@ -6,14 +6,15 @@ import koLocale from "@fullcalendar/core/locales/ko";
 import { useEffect, useState } from "react";
 import { useWorkoutStore } from "../../lib/useWorkoutStore";
 import WorkoutModal from "../../components/WorkoutModal";
-import WorkoutChart from "@/components/WorkoutChart";
+import DailyWorkoutAnalysis from "@/components/DailyWorkoutAnalysis";
+// import WorkoutChart from "@/components/WorkoutChart";
 
 export default function Dashboard() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedWorkout, setSelectedWorkout] = useState<any>(null);
   const workouts = useWorkoutStore((state) => state.workouts);
   const setWorkouts = useWorkoutStore((state) => state.setWorkouts);
-
+  const [selectedAnalysisDate, setSelectedAnalysisDate] = useState<string>('')
   useEffect(()=>{
     const fetchWorkouts = async () => {
       const res = await fetch("/api/workouts")
@@ -66,7 +67,17 @@ export default function Dashboard() {
           onClose={() => {setSelectedDate(null); setSelectedWorkout(null);}}
         />
       )}
-      <WorkoutChart/>
+      <div>
+        <input
+          type="date"
+          value={selectedAnalysisDate}
+          onChange={(e) => setSelectedAnalysisDate(e.target.value)}
+        />
+      </div>
+
+      {selectedAnalysisDate && (
+        <DailyWorkoutAnalysis date={selectedAnalysisDate} />
+      )}
     </div>
   );
 }

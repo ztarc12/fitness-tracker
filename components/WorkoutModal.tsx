@@ -4,14 +4,15 @@ import { useWorkoutStore } from "../lib/useWorkoutStore";
 interface WorkoutModalProps {
   date: string;
   workoutId?: string;
-  existingWorkout?: {title: string; sets: number; reps: number}
+  existingWorkout?: {title: string; weight: number; sets: number; reps: number}
   onClose: () => void;
 }
 
 export default function WorkoutModal({ date, workoutId, existingWorkout, onClose }: WorkoutModalProps) {
   const [title, setTitle] = useState("");
-  const [sets, setSets] = useState(3);
-  const [reps, setReps] = useState(10);
+  const [weight, setWeight] = useState<number>(0)
+  const [sets, setSets] = useState<number>(3);
+  const [reps, setReps] = useState<number>(10);
   const addWorkout = useWorkoutStore((state) => state.addWorkout);
   const updateWorkout = useWorkoutStore((state) => state.updateWorkout)
   const deleteWorkout = useWorkoutStore((state) => state.deleteWorkout)
@@ -19,6 +20,7 @@ export default function WorkoutModal({ date, workoutId, existingWorkout, onClose
   useEffect(()=>{
     if(existingWorkout) {
       setTitle(existingWorkout.title)
+      setWeight(existingWorkout.weight)
       setSets(existingWorkout.sets)
       setReps(existingWorkout.reps)
     }
@@ -26,7 +28,7 @@ export default function WorkoutModal({ date, workoutId, existingWorkout, onClose
 
   const handleSubmit = async () => {
     if (!title) return;
-    const workoutData = {title, date, sets, reps}
+    const workoutData = {title, date, weight, sets, reps}
 
     if(workoutId) {
       const res = await fetch(`api/workouts/${workoutId}`,{
@@ -77,6 +79,16 @@ export default function WorkoutModal({ date, workoutId, existingWorkout, onClose
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+        <div className="flex justify-between items-center my-2">
+          <label className="text-gray-700">중량 (kg)</label>
+          <input
+            type="number"
+            className="border p-2 w-16"
+            value={weight}
+            onChange={(e) => setWeight(Number(e.target.value))}
+            min={0}
+          />
+        </div>
         <div className="flex justify-between items-center my-2">
           <label className="text-gray-700">세트</label>
           <input

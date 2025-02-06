@@ -4,6 +4,7 @@ interface Workout {
   id: string;
   title: string;
   date: string;
+  weight: number;
   sets: number;
   reps: number;
 }

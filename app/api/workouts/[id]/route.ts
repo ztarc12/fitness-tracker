@@ -5,13 +5,13 @@ import { NextResponse } from "next/server";
 export async function PUT(req: Request, {params}:{params: Promise<{id: string}>}) {
   const { id } = await params
   await connectDB()
-  const { title, sets, reps} = await req.json()
+  const { title, weight, sets, reps} = await req.json()
 
   try {
     const updatedWorkout = await Workout.findByIdAndUpdate(
       // params.id,
       id,
-      {title, sets, reps},
+      {title, weight, sets, reps},
       {new: true}
     )
     if (!updatedWorkout) {
