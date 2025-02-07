@@ -4,10 +4,10 @@ import { NextResponse } from "next/server"
 
 export async function POST(req:Request) {
   await connectDB();
-  const {title, weight, date, sets, reps} = await req.json()
+  const {title, date, weight, sets, reps} = await req.json()
 
   try {
-    const newWorkout = new Workout({title, weight, date, sets, reps})
+    const newWorkout = new Workout({title, date, weight, sets, reps})
     await newWorkout.save()
     return NextResponse.json({success: true, workout: newWorkout})
   } catch (error) {

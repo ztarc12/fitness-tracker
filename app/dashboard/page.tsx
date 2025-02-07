@@ -6,7 +6,8 @@ import koLocale from "@fullcalendar/core/locales/ko";
 import { useEffect, useState } from "react";
 import { useWorkoutStore } from "../../lib/useWorkoutStore";
 import WorkoutModal from "../../components/WorkoutModal";
-import DailyWorkoutAnalysis from "@/components/DailyWorkoutAnalysis";
+import RecommendWorkout from "@/components/RecommendWorkout";
+// import DailyWorkoutAnalysis from "@/components/DailyWorkoutAnalysis";
 // import WorkoutChart from "@/components/WorkoutChart";
 
 export default function Dashboard() {
@@ -74,10 +75,10 @@ export default function Dashboard() {
           onChange={(e) => setSelectedAnalysisDate(e.target.value)}
         />
       </div>
-
-      {selectedAnalysisDate && (
+      <RecommendWorkout/>
+      {/* {selectedAnalysisDate && (
         <DailyWorkoutAnalysis date={selectedAnalysisDate} />
-      )}
+      )} */}
     </div>
   );
 }
