@@ -6,11 +6,11 @@ export async function POST(req: Request) {
     await loadModel()
 
     const { userData } = await req.json()
-    const recommendScore = await predictRecommend(userData)
+    const recommendExerciseName = await predictRecommend(userData)
 
     return NextResponse.json({
       success: true,
-      recommendation: recommendScore
+      recommendation: recommendExerciseName
     })
   } catch (error) {
     return NextResponse.json({
